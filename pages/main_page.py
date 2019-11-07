@@ -2,12 +2,20 @@ from .base_page import BasePage
 from .locators import MainPageLocators
 
 
-class MainPage(BasePage, MainPageLocators):
+class MainPage(BasePage):
+    """
+    Класс, описывающий главную страницу
+    """
     def go_to_login_page(self):
+        """
+        Метод для перехода на страницу логина с главной страницы
+        """
         login_link = self.browser.find_element(*MainPageLocators.LOGIN_LINK)
         login_link.click()
-        alert = self.browser.switch_to.alert
-        alert.accept()
 
     def should_be_login_link(self):
-        self.is_element_present(*MainPageLocators.LOGIN_LINK), "Login link is not presented"
+        """
+        Метод проверки наличия ссылки на страницу
+        логина/регистрации на главной странице
+        """
+        assert self.is_element_present(*MainPageLocators.LOGIN_LINK), "Login link is not presented"
