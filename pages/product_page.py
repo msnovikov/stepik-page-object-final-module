@@ -44,7 +44,7 @@ class ProductPage(BasePage):
             *ProductPageLocators.PRODUCT_NAME_MESSAGE
         ).text
 
-        assert product_name in product_name_message, \
+        assert product_name == product_name_message, \
             "the name of the product in the message does not match the name of the added product"
 
     def should_be_basket_price(self):
