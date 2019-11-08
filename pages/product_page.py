@@ -12,3 +12,9 @@ class ProductPage(BasePage):
         """
         basket_button = self.browser.find_element(*ProductPageLocators.ADD_TO_BASKET_BUTTON)
         basket_button.click()
+
+    def should_be_successful_message(self):
+        """
+        Проверка добавления выбранного товара в корзину
+        """
+        pass
