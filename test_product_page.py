@@ -13,6 +13,4 @@ def test_guest_can_add_product_to_basket(browser):
     page.open()
     page.add_product_to_basket()
     page.solve_quiz_and_get_code()
-    page.should_be_successful_message()
-
-# реализовать проверки ожидаемого результата для теста добавления товара в корзину
+    page.should_be_successful_add_product_in_basket()
