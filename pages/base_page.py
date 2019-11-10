@@ -6,6 +6,8 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import NoAlertPresentException
 from selenium.webdriver.support import expected_conditions as EC
 
+from pages.locators import BasePageLocators
+
 
 class BasePage:
     """
@@ -16,11 +18,25 @@ class BasePage:
         self.url = url
         self.browser.implicitly_wait(timeout)
 
-    def open(self):
+    def go_to_login_page(self):
         """
-        Базовый метод для открытия нужносй страницы
+        Метод для перехода на страницу логина
         """
-        self.browser.get(self.url)
+        login_link = self.browser.find_element(*BasePageLocators.LOGIN_LINK)
+        login_link.click()
+
+    def get_element_text(self, how, what):
+        """
+        Базовый метод получения текста выбранного элемента
+        :param how: как искать элемент: по ID, CSS_SELECTOR, XPATH, CLASS_NAME
+        :param what: имя элемента: ID, CSS_SELECTOR, XPATH, CLASS_NAME
+        :return: элемент найден - возвращается текст элемента
+                 элемент не найден - возвращается False
+        """
+        try:
+            return self.browser.find_element(how, what).text
+        except NoSuchElementException:
+            return False
 
     def is_element_present(self, how, what):
         """
@@ -75,18 +91,19 @@ class BasePage:
 
         return True
 
-    def get_element_text(self, how, what):
+    def open(self):
         """
-        Базовый метод получения текста выбранного элемента
-        :param how: как искать элемент: по ID, CSS_SELECTOR, XPATH, CLASS_NAME
-        :param what: имя элемента: ID, CSS_SELECTOR, XPATH, CLASS_NAME
-        :return: элемент найден - возвращается текст элемента
-                 элемент не найден - возвращается False
+        Базовый метод для открытия нужносй страницы
         """
-        try:
-            return self.browser.find_element(how, what).text
-        except NoSuchElementException:
-            return False
+        self.browser.get(self.url)
+
+    def should_be_login_link(self):
+        """
+        Метод проверки наличия ссылки на страницу
+        логина/регистрации на главной странице
+        """
+        assert self.is_element_present(*BasePageLocators.LOGIN_LINK), \
+            "Login link is not presented"
 
     def solve_quiz_and_get_code(self):
         """

@@ -1,11 +1,19 @@
 from selenium.webdriver.common.by import By
 
 
+class BasePageLocators:
+    """
+    Базовые элементы
+    """
+    LOGIN_LINK = (By.CSS_SELECTOR, "#login_link")
+    LOGIN_LINK_INVALID = (By.CSS_SELECTOR, "#login_link_inc")
+
+
 class MainPageLocators:
     """
     Элементы главной страницы
     """
-    LOGIN_LINK = (By.CSS_SELECTOR, "#login_link")
+    pass
 
 
 class LoginPageLocators:
