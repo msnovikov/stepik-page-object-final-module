@@ -25,6 +25,29 @@ links = [
 ]
 
 
+class TestUserAddToBasketFromProductPage:
+    def test_user_cant_see_success_message(self, browser):
+        """
+        Тест отсутствия сообщения об успешном
+        добавлении товара в корзину после перехода на страницу товара
+        """
+        link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer0"
+        page = ProductPage(browser, link)
+        page.open()
+        page.should_not_be_success_message()
+
+    def test_user_can_add_product_to_basket(self, browser):
+        """
+        Тест добавления выбранного товара в корзину
+        """
+        link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer0"
+        page = ProductPage(browser, link)
+        page.open()
+        page.add_product_to_basket()
+        page.solve_quiz_and_get_code()
+        page.should_be_successful_add_product_in_basket()
+
+
 # @pytest.mark.parametrize('link', links)
 def test_guest_can_add_product_to_basket(browser):
     """

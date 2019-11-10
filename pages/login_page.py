@@ -6,6 +6,9 @@ class LoginPage(BasePage):
     """
     Класс, описывающий страницу логина/регистрации
     """
+    def register_new_user(self, email, password):
+        pass
+
     def should_be_login_page(self):
         """
         Проверка страницы логина/регистрации
