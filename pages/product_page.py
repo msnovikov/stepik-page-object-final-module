@@ -37,12 +37,8 @@ class ProductPage(BasePage):
         Метод проверки наличия названия выбранного продукта
         в сообщении об успешном добавлении в корзину
         """
-        product_name = self.browser.find_element(
-            *ProductPageLocators.PRODUCT_NAME
-        ).text
-        product_name_message = self.browser.find_element(
-            *ProductPageLocators.PRODUCT_NAME_MESSAGE
-        ).text
+        product_name = self.get_element_text(*ProductPageLocators.PRODUCT_NAME)
+        product_name_message = self.get_element_text(*ProductPageLocators.PRODUCT_NAME_MESSAGE)
 
         assert product_name == product_name_message, \
             "the name of the product in the message does not match the name of the added product"
@@ -52,11 +48,7 @@ class ProductPage(BasePage):
         Метод проверки соответствия суммы в корзине
         цене выбранного товара
         """
-        product_prise = self.browser.find_element(
-            *ProductPageLocators.PRODUCT_PRICE
-        ).text
-        basket_price = self.browser.find_element(
-            *ProductPageLocators.BASKET_PRICE
-        ).text
+        product_prise = self.get_element_text(*ProductPageLocators.PRODUCT_PRICE)
+        basket_price = self.get_element_text(*ProductPageLocators.BASKET_PRICE)
 
         assert product_prise == basket_price, "Different prices"
