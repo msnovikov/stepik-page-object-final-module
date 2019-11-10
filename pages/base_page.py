@@ -1,7 +1,10 @@
 import math
 
+from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import NoAlertPresentException
+from selenium.webdriver.support import expected_conditions as EC
 
 
 class BasePage:
@@ -31,6 +34,45 @@ class BasePage:
             self.browser.find_element(how, what)
         except NoSuchElementException:
             return False
+        return True
+
+    def is_not_element_present(self, how, what, timeout=4):
+        """
+        Базовый метод проверки того, что элемент не появляется на странице
+        в течении заданного времени
+        :param how: как искать элемент: по ID, CSS_SELECTOR, XPATH, CLASS_NAME
+        :param what: имя элемента: ID, CSS_SELECTOR, XPATH, CLASS_NAME
+        :param timeout: время явного ожидания
+        :return: True - элемент не появился на странице
+                 False - элемент появился на странице
+        """
+        try:
+            WebDriverWait(self.browser, timeout).until(
+                EC.presence_of_all_elements_located((how, what))
+            )
+        except TimeoutException:
+            return True
+
+        return False
+
+    def is_element_disappeared(self, how, what, timeout=4):
+        """
+        Базовый метод проверки того, что элемент исчезает мо страницы
+        в течении заданного времени
+        :param how: как искать элемент: по ID, CSS_SELECTOR, XPATH, CLASS_NAME
+        :param what: имя элемента: ID, CSS_SELECTOR, XPATH, CLASS_NAME
+        :param timeout: время явного ожидания
+        :return: True - элемент исчез
+                 False - элемент не исчез
+        """
+        try:
+            WebDriverWait(
+                self.browser, timeout, 1, TimeoutException).until_not(
+                EC.presence_of_all_elements_located((how, what))
+            )
+        except TimeoutException:
+            return False
+
         return True
 
     def get_element_text(self, how, what):

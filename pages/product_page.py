@@ -10,7 +10,7 @@ class ProductPage(BasePage):
         """
         Метод проверки корректного добавления товара в корзину
         """
-        self.should_be_successful_message()
+        self.should_be_success_message()
         self.should_be_product_name_in_successful_message()
         self.should_be_basket_price()
 
@@ -23,14 +23,32 @@ class ProductPage(BasePage):
         )
         basket_button.click()
 
-    def should_be_successful_message(self):
+    def should_be_success_message(self):
         """
         Метод проверки отображения сообщения
         о добавлении выбранного товара в корзину
         """
         assert self.is_element_present(
-            *ProductPageLocators.PRODUCT_NAME_MESSAGE
+            *ProductPageLocators.SUCCESS_MESSAGE
         ), "There is no message on the page"
+
+    def should_not_be_success_message(self):
+        """
+        Метод проверки отсутствия сообщения об успешном
+        добавлении товара в корзину
+        """
+        assert self.is_not_element_present(
+            *ProductPageLocators.SUCCESS_MESSAGE
+        ), "Success message is presented, but should not be"
+
+    def should_be_success_message_disappeared(self):
+        """
+        Метод проверки того, что сообщение о добавлении
+        товара в корзину исчезает
+        """
+        assert self.is_element_disappeared(
+            *ProductPageLocators.SUCCESS_MESSAGE
+        ), "Success message has not disappeared"
 
     def should_be_product_name_in_successful_message(self):
         """
@@ -45,8 +63,8 @@ class ProductPage(BasePage):
 
     def should_be_basket_price(self):
         """
-        Метод проверки соответствия суммы в корзине
-        цене выбранного товара
+        Метод проверки соответствия суммы в корзине и
+        цены выбранного товара
         """
         product_prise = self.get_element_text(*ProductPageLocators.PRODUCT_PRICE)
         basket_price = self.get_element_text(*ProductPageLocators.BASKET_PRICE)
