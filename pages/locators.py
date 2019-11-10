@@ -5,8 +5,16 @@ class BasePageLocators:
     """
     Базовые элементы
     """
+    BASKET_LINK = (By.CSS_SELECTOR, ".basket-mini>span>a")
     LOGIN_LINK = (By.CSS_SELECTOR, "#login_link")
-    LOGIN_LINK_INVALID = (By.CSS_SELECTOR, "#login_link_inc")
+
+
+class BasketPageLocators:
+    """
+    Элементы страницы корзины
+    """
+    BASKET_ITEMS = (By.CSS_SELECTOR, ".basket-items")
+    BASKET_TEXT = (By.CSS_SELECTOR, "#content_inner>p")
 
 
 class MainPageLocators:

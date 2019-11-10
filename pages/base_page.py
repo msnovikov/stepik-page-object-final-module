@@ -25,6 +25,13 @@ class BasePage:
         login_link = self.browser.find_element(*BasePageLocators.LOGIN_LINK)
         login_link.click()
 
+    def go_to_basket_page(self):
+        """
+        Метод перехода на страницу корзины
+        """
+        basket_link = self.browser.find_element(*BasePageLocators.BASKET_LINK)
+        basket_link.click()
+
     def get_element_text(self, how, what):
         """
         Базовый метод получения текста выбранного элемента
